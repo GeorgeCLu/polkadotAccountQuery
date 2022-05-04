@@ -33,7 +33,7 @@ https://polkadot.subscan.io/block/5001226?tab=event) and other blocks as well.
 
 Using 1 to many relationships would only work if there was one block or date to many accounts, so for the purpose of this project I will only be counting the first instance of AccountId encountered going up from the 5000000 block, so to make the queries using the 1 to many relationships work, and excluding accounts with repeating AccountId's.
 
-There are also seperate queries after the Queries using 1 to many relationships to show the number of accounts created for each block or date and these ones also include ones with AccountId's that have already been created earlier in another block/date, such as the earlier mentioned “13fNutUiAy398Tw6o2f21LyAeQrPxT8panXsRoKuY5r7YxDU” account.
+There are also seperate queries in the "Queries to show the number of accounts created including ones with AccountId's that have already been created in another indexed block/date" section (after the Queries using 1 to many relationships section) to show the number of accounts created for each block or date and these ones also include ones with AccountId's that have already been created earlier in another block/date, such as the earlier mentioned “13fNutUiAy398Tw6o2f21LyAeQrPxT8panXsRoKuY5r7YxDU” account.
 
 
 
