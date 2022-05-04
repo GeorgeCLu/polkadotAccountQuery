@@ -1,13 +1,13 @@
 type Account @entity {
   id: ID! #id is a required field
   address: String!
-  #to: BlockTest!
+  to: BlockTest!
   creationTimestamp: Date!
   creationDate: Date!
-  #blockNumber: BigInt!
+  blockNumber: BigInt!
   # one to many
   #creationDate: AccountsByDate!
-  blockNumber: AccountsByBlock!
+  #blockNumber: AccountsByBlock!
 }
 
 type AccountsByBlock @entity{

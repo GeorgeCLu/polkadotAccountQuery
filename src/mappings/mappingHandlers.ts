@@ -116,7 +116,7 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
       // record.creationBlock = event.block.block.header.number.toBigInt();
 
 
-      //record.toId = event.block.block.header.number.toBigInt().toString();
+      record.toId = event.block.block.header.number.toBigInt().toString();
       //   record.toId = event.block.timestamp.toString();
 
 
@@ -128,9 +128,9 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
     
     
 
-      // record.blockNumber = event.block.block.header.number.toBigInt();
+      record.blockNumber = event.block.block.header.number.toBigInt();
       // one to many
-      record.blockNumberId = event.block.block.header.number.toBigInt().toString();
+      // record.blockNumberId = event.block.block.header.number.toBigInt().toString();
 
       // record.blockNumberTestId = event.block.block.header.number.toBigInt().toString();
 
