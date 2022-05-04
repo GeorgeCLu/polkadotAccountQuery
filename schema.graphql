@@ -25,7 +25,7 @@ type Day @entity {
 type AccountsByBlock @entity{
   id: ID! # blockNumber
   totalAccounts: BigInt!
-  date: Date! #for debugging
+  date: String! #for debugging
 }
 
 # Seperately get number of accounts for each date will include duplicate accounts

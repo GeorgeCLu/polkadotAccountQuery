@@ -12,18 +12,18 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
       const record = new Account(accountId.toString());
 
       // query for date
-      let dateEntity = await Day.get((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
+      let dateEntity = await Day.get((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '').substring(4));
       if ( dateEntity === undefined){
-        let dateToSave = new Day((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
+        let dateToSave = new Day((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '').substring(4));
         dateToSave.totalAccounts = BigInt(0);
         await dateToSave.save();
       }
-      dateEntity = await Day.get((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
+      dateEntity = await Day.get((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '').substring(4));
       dateEntity.totalAccounts =  dateEntity.totalAccounts + BigInt(1);
       await dateEntity.save();
 
       if (true) {//event.block.block.header.number.toNumber() < 5000050 ){
-        logger.info(logger.info(" block " + event.block.block.header.number.toBigInt().toString() + " account " + accountId.toString() + ' dateEntity incremented ' + dateEntity.totalAccounts.toString() + ' ' + (new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '')));
+        logger.info(logger.info(" block " + event.block.block.header.number.toBigInt().toString() + " account " + accountId.toString() + ' dateEntity incremented ' + dateEntity.totalAccounts.toString() + ' ' + (new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '').substring(4)));
       }
 
        // query for blocks
@@ -41,7 +41,7 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
 
       record.address = accountId.toString();
       record.blockId = event.block.block.header.number.toBigInt().toString();
-      record.dateId = (new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '');
+      record.dateId = (new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '').substring(4);
       record.creationTimestamp = event.block.timestamp;
       record.creationDate = (new Date(event.block.timestamp.toDateString()));
       record.blockNumber = event.block.block.header.number.toBigInt();
@@ -50,7 +50,7 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
 }
 
 // search for all accounts by block including those with same accountId also created in another block
-function createAccountsByBlock(blockNumber: string, date: Date): AccountsByBlock {
+function createAccountsByBlock(blockNumber: string, date: string): AccountsByBlock {
   const entity = new AccountsByBlock(blockNumber);
   entity.totalAccounts = BigInt(0);
   entity.date = date;
@@ -63,7 +63,7 @@ export async function handleAccountsByBlock(event: SubstrateEvent): Promise<void
   if (true){//!accountToTest){ // if non duplicated accounts
     let entity = await AccountsByBlock.get(event.block.block.header.number.toBigInt().toString());
     if (entity === undefined){
-        entity = createAccountsByBlock(event.block.block.header.number.toBigInt().toString(), new Date(event.block.timestamp.toDateString()));
+        entity = createAccountsByBlock(event.block.block.header.number.toBigInt().toString(), ((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '').substring(4)));
     }
     entity.totalAccounts = entity.totalAccounts + BigInt(1);
     await entity.save();
@@ -81,15 +81,15 @@ export async function handleAccountsByDate(event: SubstrateEvent): Promise<void>
   const {event: { data: [ accountId] }} = event;
   const accountToTest = await Account.get(accountId.toString());
   if (true){// !accountToTest){ // if non duplicated accounts
-    let entity = await AccountsByDate.get((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
+    let entity = await AccountsByDate.get((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '').substring(4));
     if (entity === undefined){
-        entity = createAccountsByDate((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
+        entity = createAccountsByDate((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '').substring(4));
     }
     entity.totalAccounts = entity.totalAccounts + BigInt(1);
     await entity.save();
     if (true) { // event.block.block.header.number.toNumber() < 5000050 ){
       // logger.info(event.block.block.header.number.toBigInt().toString() + " " + accountId.toString() );
-      logger.info(logger.info(" block " + event.block.block.header.number.toBigInt().toString() + " account " + accountId.toString() + ' entity incremented ' + entity.totalAccounts.toString() +' ' + (new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '')));
+      logger.info(logger.info(" block " + event.block.block.header.number.toBigInt().toString() + " account " + accountId.toString() + ' entity incremented ' + entity.totalAccounts.toString() +' ' + (new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '').substring(4)));
   
     }
   }
