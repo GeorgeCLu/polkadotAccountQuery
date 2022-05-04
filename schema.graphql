@@ -1,0 +1,34 @@
+type Account @entity {
+  id: ID! #id is a required field
+  address: String!
+  #to: BlockTest!
+  creationTimestamp: Date!
+  creationDate: Date!
+  #blockNumber: BigInt!
+  # one to many
+  #creationDate: AccountsByDate!
+  blockNumber: AccountsByBlock!
+}
+
+type AccountsByBlock @entity{
+  id: ID! # blockNumber
+  totalAccounts: BigInt!
+  date: Date!
+}
+
+type AccountsByDate @entity{
+  id: ID! # Date
+  totalAccounts: BigInt!
+}
+
+type BlockTest @entity {
+  id: ID! #this primary key is set as the toAddress
+  timestamp: Date!
+  date: Date!
+  totalAccounts: BigInt!
+}
+
+type DateTest @entity {
+  id: ID! #this primary key is set as the toAddress
+  totalAccounts: BigInt!
+}
