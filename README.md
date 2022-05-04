@@ -15,7 +15,7 @@ Write a graphql query find out how many accounts have been created in a specific
 
 Github link: https://github.com/GeorgeCLu/polkadotAccountQuery
 
-Link to your project on the hosted service: https://explorer.subquery.network/subquery/GeorgeCLu/queryaccounts
+Link to the project on the hosted service: https://explorer.subquery.network/subquery/GeorgeCLu/queryaccounts
 
 API link: https://api.subquery.network/sq/GeorgeCLu/queryaccounts
 
