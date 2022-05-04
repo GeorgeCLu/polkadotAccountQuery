@@ -2,6 +2,7 @@ type Account @entity {
   id: ID! #id is a required field
   address: String!
   to: BlockTest!
+  date: DateTest!
   creationTimestamp: Date!
   creationDate: Date!
   blockNumber: BigInt!

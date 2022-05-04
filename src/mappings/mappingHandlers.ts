@@ -100,6 +100,16 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
       entity.totalAccounts = entity.totalAccounts + BigInt(1);
       await entity.save();
 
+      let date = await DateTest.get((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
+      if (date === undefined){
+        let dateToSave = new DateTest((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
+        dateToSave.totalAccounts = BigInt(0);
+        await dateToSave.save();
+      }
+      date = await DateTest.get((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
+      date.totalAccounts = date.totalAccounts + BigInt(1);
+      await date.save();
+
 /*
       const blockNo = await BlockTest.get(event.block.block.header.number.toBigInt().toString());
           // if not in DB, instantiate a new Account object using the toAddress as a unique ID
@@ -119,6 +129,7 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
       record.toId = event.block.block.header.number.toBigInt().toString();
       //   record.toId = event.block.timestamp.toString();
 
+      record.dateId = (new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', '');
 
       record.creationTimestamp = event.block.timestamp;
   
