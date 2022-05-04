@@ -1,10 +1,41 @@
-# SubQuery - Starter Package
+# Create a SubQuery project to find out how many new accounts have been created on the Polkadot network in a day.
+
+This will require:
+
+Record new account and the block information, and use 1 to many relationship
+
+Use subquery dictionary to accelerate indexing
+
+Publish the project using SubQuery CLl, and deploy the project to the SubQuery host service.
+
+Write a graphql query find out how many accounts have been created in a specific block
+
+Write a graphql query find out how many accounts have been created in a specific day
 
 
-The Starter Package is an example that you can use as a starting point for developing your SubQuery project.
-A SubQuery package defines which data The SubQuery will index from the Substrate blockchain, and how it will store it. 
+Github link: https://github.com/GeorgeCLu/polkadotAccountQuery
 
-## Preparation
+Link to your project on the hosted service: https://explorer.subquery.network/subquery/GeorgeCLu/queryaccounts
+
+API link: https://api.subquery.network/sq/GeorgeCLu/queryaccounts
+
+Queries for the above tasks.
+
+## Notes
+
+The Starting block for indexing is 5000000, so only some events from May 10 2021 will be captured
+
+It seems that some new accounts seem to be created in different blocks, but with the exact same AccountId.
+
+For example the account “13fNutUiAy398Tw6o2f21LyAeQrPxT8panXsRoKuY5r7YxDU”
+seems to be created in at least blocks [5000007](https://polkadot.subscan.io/block/5000007?tab=event), [5000217](https://polkadot.subscan.io/block/5000217?tab=event), [5000959](https://polkadot.subscan.io/block/5000959?tab=event), [5001226](
+https://polkadot.subscan.io/block/5001226?tab=event) and other blocks as well.
+
+Using 1 to many relationships would only work if there was one block or date to many accounts, so for this purpose I will only be counting the first instance of AccountId encountered going up from the 5000000 block, to make the queries using the 1 to many relationships work.
+
+There are also seperate queries to show the number of accounts created for each block or date including ones with AccountId's that have already created in another block/date.  
+
+
 
 #### Environment
 
