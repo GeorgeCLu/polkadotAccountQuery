@@ -31,9 +31,9 @@ For example the account “13fNutUiAy398Tw6o2f21LyAeQrPxT8panXsRoKuY5r7YxDU”
 seems to be created in at least blocks [5000007](https://polkadot.subscan.io/block/5000007?tab=event), [5000217](https://polkadot.subscan.io/block/5000217?tab=event), [5000959](https://polkadot.subscan.io/block/5000959?tab=event), [5001226](
 https://polkadot.subscan.io/block/5001226?tab=event) and other blocks as well.
 
-Using 1 to many relationships would only work if there was one block or date to many accounts, so for the purpose of this project I will only be counting the first instance of AccountId encountered going up from the 5000000 block, so to make the queries using the 1 to many relationships work.
+Using 1 to many relationships would only work if there was one block or date to many accounts, so for the purpose of this project I will only be counting the first instance of AccountId encountered going up from the 5000000 block, so to make the queries using the 1 to many relationships work, and excluding accounts with repeating AccountId's.
 
-There are also seperate queries to show the number of accounts created for each block or date including ones with AccountId's that have already been created in another block/date, such as the “13fNutUiAy398Tw6o2f21LyAeQrPxT8panXsRoKuY5r7YxDU” account.
+There are also seperate queries to show the number of accounts created for each block or date and these ones also include ones with AccountId's that have already been created earlier in another block/date, such as the earlier mentioned “13fNutUiAy398Tw6o2f21LyAeQrPxT8panXsRoKuY5r7YxDU” account.
 
 
 
