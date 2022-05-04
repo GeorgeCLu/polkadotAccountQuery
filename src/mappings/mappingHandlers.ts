@@ -17,7 +17,7 @@ function createAccountsByDate(date: string): AccountsByDate {
 export async function handleAccountsByDate(event: SubstrateEvent): Promise<void> {
   const {event: { data: [ accountId] }} = event;
   const accountToTest = await Account.get(accountId.toString());
-  if (!accountToTest){ // if non duplicated accounts
+  if (true){// !accountToTest){ // if non duplicated accounts
     let entity = await AccountsByDate.get((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
     if (entity === undefined){
         entity = createAccountsByDate((new Date(event.block.timestamp.toDateString())).toString().replace(' 00:00:00 GMT+0000 (GMT)', ''));
@@ -35,7 +35,7 @@ export async function handleAccountsByDate(event: SubstrateEvent): Promise<void>
 export async function handleAccountsByBlock(event: SubstrateEvent): Promise<void> {
   const {event: { data: [ accountId] }} = event;
   const accountToTest = await Account.get(accountId.toString());
-  if (!accountToTest){ // if non duplicated accounts
+  if (true){//!accountToTest){ // if non duplicated accounts
     let entity = await AccountsByBlock.get(event.block.block.header.number.toBigInt().toString());
     if (entity === undefined){
         entity = createAccountsByBlock(event.block.block.header.number.toBigInt().toString(), new Date(event.block.timestamp.toDateString()));
