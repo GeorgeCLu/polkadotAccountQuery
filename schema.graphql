@@ -1,35 +1,35 @@
 type Account @entity {
   id: ID! #id is a required field
   address: String!
-  to: BlockTest!
-  date: DateTest!
-  creationTimestamp: Date!
-  creationDate: Date!
-  blockNumber: BigInt!
+  creationTimestamp: Date! #for debugging
+  creationDate: Date! #for debugging
+  blockNumber: BigInt! #for debugging
   # one to many
-  #creationDate: AccountsByDate!
-  #blockNumber: AccountsByBlock!
+  block: Block!
+  date: Day!
 }
 
+type Block @entity {
+  id: ID! #this primary key is set as the toAddress
+  timestamp: Date! #for debugging
+  date: Date! #for debugging
+  totalAccounts: BigInt!
+}
+
+type Day @entity {
+  id: ID! #this primary key is set as the toAddress
+  totalAccounts: BigInt!
+}
+
+# Seperately get number of accounts for each block will include duplicate accounts
 type AccountsByBlock @entity{
   id: ID! # blockNumber
   totalAccounts: BigInt!
-  date: Date!
+  date: Date! #for debugging
 }
 
+# Seperately get number of accounts for each date will include duplicate accounts
 type AccountsByDate @entity{
   id: ID! # Date
-  totalAccounts: BigInt!
-}
-
-type BlockTest @entity {
-  id: ID! #this primary key is set as the toAddress
-  timestamp: Date!
-  date: Date!
-  totalAccounts: BigInt!
-}
-
-type DateTest @entity {
-  id: ID! #this primary key is set as the toAddress
   totalAccounts: BigInt!
 }
