@@ -1,4 +1,4 @@
-# Create a SubQuery project to find out how many new accounts have been created on the Polkadot network in a day.
+### Create a SubQuery project to find out how many new accounts have been created on the Polkadot network in a day.
 
 This will require:
 
@@ -21,7 +21,7 @@ API link: https://api.subquery.network/sq/GeorgeCLu/queryaccounts
 
 Queries for the above tasks.
 
-## Notes
+#### Notes
 
 The Starting block for indexing is 5000000, so only some events from May 10 2021 will be captured
 
@@ -33,100 +33,148 @@ https://polkadot.subscan.io/block/5001226?tab=event) and other blocks as well.
 
 Using 1 to many relationships would only work if there was one block or date to many accounts, so for this purpose I will only be counting the first instance of AccountId encountered going up from the 5000000 block, to make the queries using the 1 to many relationships work.
 
-There are also seperate queries to show the number of accounts created for each block or date including ones with AccountId's that have already created in another block/date.  
+There are also seperate queries to show the number of accounts created for each block or date including ones with AccountId's that have already been created in another block/date.  
 
 
 
-#### Environment
-
-- [Typescript](https://www.typescriptlang.org/) are required to compile project and define types.  
-
-- Both SubQuery CLI and generated Project have dependencies and require [Node](https://nodejs.org/en/).
-     
-
-#### Install the SubQuery CLI
-
-Install SubQuery CLI globally on your terminal by using NPM:
-
-```
-npm install -g @subql/cli
-```
-
-Run help to see available commands and usage provide by CLI
-```
-subql help
-```
-
-## Initialize the starter package
-
-Inside the directory in which you want to create the SubQuery project, simply replace `project-name` with your project name and run the command:
-```
-subql init --starter project-name
-```
-Then you should see a folder with your project name has been created inside the directory, you can use this as the start point of your project. And the files should be identical as in the [Directory Structure](https://doc.subquery.network/directory_structure.html).
-
-Last, under the project directory, run following command to install all the dependency.
-```
-yarn install
-```
+##### Queries using 1 to many relationships
 
 
-## Configure your project
+##### Queries to show the number of accounts created including ones with AccountId's that have already been created in another block/date.
 
-In the starter package, we have provided a simple example of project configuration. You will be mainly working on the following files:
-
-- The Manifest in `project.yaml`
-- The GraphQL Schema in `schema.graphql`
-- The Mapping functions in `src/mappings/` directory
-
-For more information on how to write the SubQuery, 
-check out our doc section on [Define the SubQuery](https://doc.subquery.network/define_a_subquery.html) 
-
-#### Code generation
-
-In order to index your SubQuery project, it is mandatory to build your project first.
-Run this command under the project directory.
-
-````
-yarn codegen
-````
-
-## Build the project
-
-In order to deploy your SubQuery project to our hosted service, it is mandatory to pack your configuration before upload.
-Run pack command from root directory of your project will automatically generate a `your-project-name.tgz` file.
-
-```
-yarn build
-```
-
-## Indexing and Query
-
-#### Run required systems in docker
-
-
-Under the project directory run following command:
-
-```
-docker-compose pull && docker-compose up
-```
-#### Query the project
-
-Open your browser and head to `http://localhost:3000`.
-
-Finally, you should see a GraphQL playground is showing in the explorer and the schemas that ready to query.
-
-For the `subql-starter` project, you can try to query with the following code to get a taste of how it works.
-
+Query number of accounts created by blocks:
 ````graphql
 {
   query{
-    starterEntities(first:10){
-      nodes{
-        field1,
-        field2,
-        field3
+     accountsByBlocks(orderBy:ID_ASC first: 3){
+          nodes{
+               id
+               totalAccounts
+               date
+          }
+     }
+  }
+}
+````
+````
+{
+  "data": {
+    "query": {
+      "accountsByBlocks": {
+        "nodes": [
+          {
+            "id": "5000000",
+            "totalAccounts": "3",
+            "date": "May 10 2021"
+          },
+          {
+            "id": "5000001",
+            "totalAccounts": "2",
+            "date": "May 10 2021"
+          },
+          {
+            "id": "5000002",
+            "totalAccounts": "2",
+            "date": "May 10 2021"
+          }
+        ]
       }
+    }
+  }
+}
+````
+
+Query accounts created by for a specific block - 5000172 in this query:
+````graphql
+query{
+  accountsByBlocks(filter: {id: {equalTo: "5000172"}}){
+    nodes{
+      id
+      totalAccounts
+      date
+    }
+  }
+}
+````
+````
+{
+  "data": {
+    "accountsByBlocks": {
+      "nodes": [
+        {
+          "id": "5000172",
+          "totalAccounts": "5",
+          "date": "May 10 2021"
+        }
+      ]
+    }
+  }
+}
+````
+
+Query number of accounts created by dates:
+````graphql
+query{
+  accountsByDates(orderBy:ID_ASC first: 5){
+    nodes{
+      id
+      totalAccounts
+    }
+  }
+}
+````
+````
+{
+  "data": {
+    "accountsByDates": {
+      "nodes": [
+        {
+          "id": "May 10 2021",
+          "totalAccounts": "4472"
+        },
+        {
+          "id": "May 11 2021",
+          "totalAccounts": "5617"
+        },
+        {
+          "id": "May 12 2021",
+          "totalAccounts": "5663"
+        },
+        {
+          "id": "May 13 2021",
+          "totalAccounts": "6179"
+        },
+        {
+          "id": "May 14 2021",
+          "totalAccounts": "5992"
+        }
+      ]
+    }
+  }
+}
+````
+
+Query accounts created by for a specific date - "May 11 2021" in this query:
+````graphql
+query{
+  accountsByDates(filter: {id: {equalTo: "May 11 2021"}}){
+    nodes{
+      id
+      totalAccounts
+    }
+  }
+}
+````
+````
+{
+  "data": {
+    "accountsByDates": {
+      "nodes": [
+        {
+          "id": "May 11 2021",
+          "totalAccounts": "5617"
+        }
+      ]
     }
   }
 }
