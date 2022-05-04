@@ -23,7 +23,7 @@ Queries for the above tasks.
 
 #### Notes
 
-The Starting block for indexing is 5000000, so only some events from May 10 2021 onwards will be captured
+The Starting block for indexing is 5000000, so only some events from May 10 2021 onwards will be captured.
 
 It seems that some new accounts seem to be created in different blocks, but with the exact same AccountId.
 
